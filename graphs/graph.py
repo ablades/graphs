@@ -67,7 +67,9 @@ class Graph:
         Returns:
         Vertex: The new vertex object.
         """
-        pass
+        self.__vertex_dict[vertex_id] = Vertex(vertex_id)
+
+        return self.__vertex_dict[vertex_id]
 
     def get_vertex(self, vertex_id):
         """Return the vertex if it exists."""
