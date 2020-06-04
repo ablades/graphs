@@ -67,9 +67,10 @@ class Graph:
         Returns:
         Vertex: The new vertex object.
         """
+
         self.__vertex_dict[vertex_id] = Vertex(vertex_id)
 
-        return self.__vertex_dict[vertex_id]
+        return self.__vertex_dict.get(vertex_id)
 
     def get_vertex(self, vertex_id):
         """Return the vertex if it exists."""
@@ -87,11 +88,16 @@ class Graph:
         vertex_id1 (string): The unique identifier of the first vertex.
         vertex_id2 (string): The unique identifier of the second vertex.
         """
-        self.get_vertex(vertex_id1).add_neighbor(self.get_vertex(vertex_id2))
+        if self.get_vertex(vertex_id1) is None:
+            self.add_vertex(vertex_id1)
 
-        # add reverse edge if not directed
+        if self.get_vertex(vertex_id2) is None:
+            self.add_vertex(vertex_id2)
+
+        self.__vertex_dict[vertex_id1].add_neighbor(self.__vertex_dict[vertex_id2])
+
         if not self.__is_directed:
-            self.get_vertex(vertex_id2).add_neighbor(self.get_vertex(vertex_id1))
+            self.__vertex_dict[vertex_id2].add_neighbor(self.__vertex_dict[vertex_id1])
 
     def get_vertices(self):
         """

@@ -8,26 +8,26 @@ if __name__ == '__main__':
 
     # Create the graph
 
-    graph = Graph(is_directed=True)
+    # graph = Graph(is_directed=True)
 
-    # Add some vertices
-    graph.add_vertex('A')
-    graph.add_vertex('E')
-    graph.add_vertex('B')
-    graph.add_vertex('C')
-    graph.add_vertex('D')
-    graph.add_vertex('F')
-    graph.add_vertex('G')
+    # # Add some vertices
+    # graph.add_vertex('A')
+    # graph.add_vertex('E')
+    # graph.add_vertex('B')
+    # graph.add_vertex('C')
+    # graph.add_vertex('D')
+    # graph.add_vertex('F')
+    # graph.add_vertex('G')
 
-    # Add connections
-    graph.add_edge('A', 'B')
-    graph.add_edge('B', 'C')
-    graph.add_edge('B', 'D')
-    graph.add_edge('D', 'E')
-    graph.add_edge('F', 'G')
+    # # Add connections
+    # graph.add_edge('A', 'B')
+    # graph.add_edge('B', 'C')
+    # graph.add_edge('B', 'D')
+    # graph.add_edge('D', 'E')
+    # graph.add_edge('F', 'G')
 
     # Or, read a graph in from a file
-    # graph = read_graph_from_file('test_files/graph_small_directed.txt')
+    graph = read_graph_from_file('test_files/graph_small_directed.txt')
 
     # Output the vertices & edges
     # Print vertices

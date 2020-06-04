@@ -29,6 +29,7 @@ def read_graph_from_file(filename):
         for _, v in enumerate(vertices):
             g.add_vertex(v)
 
+        # add edges
         line = f.readline()
         while line:
             vertex = line.strip('()').split(',')
