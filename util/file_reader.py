@@ -1,4 +1,5 @@
 from graphs.graph import Graph
+import re
 
 
 def read_graph_from_file(filename):
@@ -15,27 +16,29 @@ def read_graph_from_file(filename):
     """
 
     with open(filename) as f:
-        line = f.readline()
+        line = f.readline().strip(' \n')
         # read first line
         if line == 'G':
             g = Graph(is_directed=False)
-        else:
+        elif line == 'D':
             g = Graph()
+        else:
+            raise ValueError(line)
 
         # read second line and split it into a comma and add vertices
-        vertices = f.readline().split(',')
+        vertices = f.readline().strip('., \n')
         for _, v in enumerate(vertices):
             g.add_vertex(v)
 
         # add edges
         line = f.readline()
         while line:
-            print(line)
-            vertex = line.strip('() \n').split(',')
+            vertex = re.findall('[A-Z]|')
             g.add_edge(vertex[0], vertex[1])
             line = f.readline()
 
-        return g
+    print(g.get_vertices())
+    return g
 
 
 if __name__ == '__main__':
