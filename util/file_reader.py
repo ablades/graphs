@@ -14,7 +14,6 @@ def read_graph_from_file(filename):
     vertices and edges
     """
 
-    # TODO: Use 'open' to open the file
     with open(filename) as f:
         line = f.readline()
         # read first line
@@ -24,7 +23,6 @@ def read_graph_from_file(filename):
             g = Graph()
 
         # read second line and split it into a comma and add vertices
-        line = f.readline()
         vertices = f.readline().split(',')
         for _, v in enumerate(vertices):
             g.add_vertex(v)
@@ -32,9 +30,12 @@ def read_graph_from_file(filename):
         # add edges
         line = f.readline()
         while line:
-            vertex = line.strip('()').split(',')
+            print(line)
+            vertex = line.strip('() \n').split(',')
             g.add_edge(vertex[0], vertex[1])
             line = f.readline()
+
+        return g
 
 
 if __name__ == '__main__':

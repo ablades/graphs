@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # graph.add_edge('F', 'G')
 
     # Or, read a graph in from a file
-    graph = read_graph_from_file('test_files/graph_small_directed.txt')
+    graph = read_graph_from_file('test_files/graph_medium_undirected.txt')
 
     # Output the vertices & edges
     # Print vertices
