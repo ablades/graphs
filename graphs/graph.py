@@ -206,9 +206,9 @@ class Graph:
 
         Returns:
         list<string>: All vertex ids that are `target_distance` away from the start vertex
-        """ 
+        """
         # vertices that have already been seen
-        seen = set()
+        visited = set()
         # holds verticies and shortest paths
         target_vertices = []
 
@@ -216,11 +216,11 @@ class Graph:
         queue = deque()
         # add tuple to queue with id and distance
         queue.append((start_id, 0))
-        seen.add(start_id)
+        visited.add(start_id)
+
         # perform bfs
         while queue:
             # take item off queue
-            print(queue)
             v = queue.pop()
 
             # add item if it matches distance
@@ -229,10 +229,9 @@ class Graph:
 
             # add adjacent verticies
             for _, vertex in enumerate(self.get_vertex(v[0]).get_neighbors()):
-                # vertex has not been seen add to queue increment distance
-                print(vertex.get_id())
-                if vertex.get_id() not in seen:
+                # add vertex to queue mark as seen
+                if vertex.get_id() not in visited:
                     queue.append((vertex.get_id(), v[1] + 1))
-                    seen.add(vertex.get_id())
+                    visited.add(vertex.get_id())
 
         return target_vertices
