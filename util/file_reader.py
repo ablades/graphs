@@ -26,18 +26,17 @@ def read_graph_from_file(filename):
             raise ValueError(line)
 
         # read second line and split it into a comma and add vertices
-        vertices = f.readline().strip('., \n')
+        vertices = re.findall('[A-Z]|[0-9]', f.readline())
         for _, v in enumerate(vertices):
             g.add_vertex(v)
 
         # add edges
         line = f.readline()
         while line:
-            vertex = re.findall('[A-Z]|')
+            vertex = re.findall('[A-Z]|[0-9]', line)
             g.add_edge(vertex[0], vertex[1])
             line = f.readline()
-
-    print(g.get_vertices())
+            
     return g
 
 
