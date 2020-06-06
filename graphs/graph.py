@@ -216,26 +216,23 @@ class Graph:
         queue = deque()
         # add tuple to queue with id and distance
         queue.append((start_id, 0))
-
+        seen.add(start_id)
         # perform bfs
         while queue:
             # take item off queue
+            print(queue)
             v = queue.pop()
 
             # add item if it matches distance
             if v[1] == target_distance:
                 target_vertices.append(v[0])
 
-            # add id to seen
-            seen.add(v[0])
-
-            self.get_vertex(v[0]).get_neighbors()
             # add adjacent verticies
             for _, vertex in enumerate(self.get_vertex(v[0]).get_neighbors()):
-
                 # vertex has not been seen add to queue increment distance
+                print(vertex.get_id())
                 if vertex.get_id() not in seen:
-                    distance = v[1] + 1
-                    queue.append((vertex.get_id(), distance))
+                    queue.append((vertex.get_id(), v[1] + 1))
+                    seen.add(vertex.get_id())
 
         return target_vertices

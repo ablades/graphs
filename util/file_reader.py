@@ -25,7 +25,7 @@ def read_graph_from_file(filename):
         else:
             raise ValueError(line)
 
-        # read second line and split it into a comma and add vertices
+        # regex line into only characters or digits
         vertices = re.findall('[A-Z]|[0-9]', f.readline())
         for _, v in enumerate(vertices):
             g.add_vertex(v)
@@ -36,7 +36,7 @@ def read_graph_from_file(filename):
             vertex = re.findall('[A-Z]|[0-9]', line)
             g.add_edge(vertex[0], vertex[1])
             line = f.readline()
-            
+
     return g
 
 
