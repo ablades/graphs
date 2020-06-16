@@ -235,3 +235,44 @@ class Graph:
                     visited.add(vertex.get_id())
 
         return target_vertices
+
+    def is_bipartite(self, start_id):
+        """
+        Return True if the graph is bipartite, and False otherwise.
+        """
+
+        visited = {}
+        # build queue add first item
+        queue = deque()
+        current_color = "r"
+        queue.append(start_id)
+        visited[start_id] = current_color
+
+        while queue:
+            if current_color == "r":
+                current_color = "b"
+            elif current_color == "b":
+                current_color = "r"
+
+            v = queue.pop()
+
+            # loop over adjcent vertexes
+            for _, vertex in enumerate(self.get_vertex(v[0]).get_neighbors()):
+                vertex_color = visited.get(vertex.get_id(), None)
+                # graph is not bipartite
+                if vertex_color == current_color:
+                    return False
+                # vertex has not been seen add it to queue
+                elif vertex_color is None:
+                    visited[vertex.get_id()] = current_color
+                    queue.append(vertex.get_id())
+
+        #add node to queue
+
+        #add adj nodes to queue if they do not have a color.
+            #if they have color
+                #if color is same as parent, return false
+            #if its an opposite color 
+                #skip node and continue traversal.
+
+        pass
