@@ -236,11 +236,11 @@ class Graph:
 
         return target_vertices
 
-    def is_bipartite(self, start_id):
+    def is_bipartite(self):
         """
         Return True if the graph is bipartite, and False otherwise.
         """
-
+        start_id = self.get_vertices()[0].get_id()
         visited = {}
         # build queue add first item
         queue = deque()
@@ -249,21 +249,26 @@ class Graph:
         visited[start_id] = current_color
 
         while queue:
+            print(queue)
             # swap color
             if current_color == "r":
                 current_color = "b"
             else:
                 current_color = "r"
 
-            v = queue.pop()
+            v = self.get_vertex(queue.pop())
 
             # loop over adjcent vertexes
-            for _, vertex in enumerate(self.get_vertex(v[0]).get_neighbors()):
+            for _, vertex in enumerate(v.get_neighbors()):
                 vertex_color = visited.get(vertex.get_id(), None)
                 # graph is not bipartite
-                if vertex_color == current_color:
+                print(vertex)
+                print(vertex_color)
+                print(current_color)
+
+                if vertex_color == visited.get(v.get_id()):
                     return False
-                # vertex has not been seen add it to queue
+                # vertex has not been seen give it a color, add it to queue
                 elif vertex_color is None:
                     visited[vertex.get_id()] = current_color
                     queue.append(vertex.get_id())
