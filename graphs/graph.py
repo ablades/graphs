@@ -244,28 +244,30 @@ class Graph:
         visited = {}
         # build queue add first item
         queue = deque()
-        current_color = "r"
+        next_color = "r"
         queue.append(start_id)
-        visited[start_id] = current_color
+        visited[start_id] = next_color
 
         while queue:
             # swap color
-            if current_color == "r":
-                current_color = "b"
+            if next_color == "r":
+                next_color = "b"
             else:
-                current_color = "r"
+                next_color = "r"
 
-            v = self.get_vertex(queue.pop())
+            current_vertex = self.get_vertex(queue.pop())
 
             # loop over adjcent vertexes
-            for _, vertex in enumerate(v.get_neighbors()):
+            for _, vertex in enumerate(current_vertex.get_neighbors()):
                 vertex_color = visited.get(vertex.get_id(), None)
-                # graph is not bipartite if vertex is same color as parent
-                if vertex_color == visited.get(v.get_id()):
+                current_color = visited.get(current_vertex.get_id(), None)
+
+                # graph is not bipartite if vertex is same color as current node
+                if vertex_color == current_color:
                     return False
                 # vertex has not been seen give it a color, add it to queue
                 elif vertex_color is None:
-                    visited[vertex.get_id()] = current_color
+                    visited[vertex.get_id()] = next_color
                     queue.append(vertex.get_id())
 
         return True
