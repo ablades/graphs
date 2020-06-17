@@ -249,7 +249,6 @@ class Graph:
         visited[start_id] = current_color
 
         while queue:
-            print(queue)
             # swap color
             if current_color == "r":
                 current_color = "b"
@@ -261,11 +260,7 @@ class Graph:
             # loop over adjcent vertexes
             for _, vertex in enumerate(v.get_neighbors()):
                 vertex_color = visited.get(vertex.get_id(), None)
-                # graph is not bipartite
-                print(vertex)
-                print(vertex_color)
-                print(current_color)
-
+                # graph is not bipartite if vertex is same color as parent
                 if vertex_color == visited.get(v.get_id()):
                     return False
                 # vertex has not been seen give it a color, add it to queue
