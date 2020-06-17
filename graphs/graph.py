@@ -249,9 +249,10 @@ class Graph:
         visited[start_id] = current_color
 
         while queue:
+            # swap color
             if current_color == "r":
                 current_color = "b"
-            elif current_color == "b":
+            else:
                 current_color = "r"
 
             v = queue.pop()
@@ -267,12 +268,4 @@ class Graph:
                     visited[vertex.get_id()] = current_color
                     queue.append(vertex.get_id())
 
-        #add node to queue
-
-        #add adj nodes to queue if they do not have a color.
-            #if they have color
-                #if color is same as parent, return false
-            #if its an opposite color 
-                #skip node and continue traversal.
-
-        pass
+        return True
