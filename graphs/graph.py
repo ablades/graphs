@@ -174,7 +174,7 @@ class Graph:
 
         # while queue is not empty
         while queue:
-            current_vertex_obj = queue.pop()   # vertex obj to visit next
+            current_vertex_obj = queue.popleft()   # vertex obj to visit next
             current_vertex_id = current_vertex_obj.get_id()
 
             # found target, can stop the loop early
@@ -221,7 +221,7 @@ class Graph:
         # perform bfs
         while queue:
             # take item off queue
-            v = queue.pop()
+            v = queue.popleft()
 
             # add item if it matches distance
             if v[1] == target_distance:
@@ -255,7 +255,7 @@ class Graph:
             else:
                 next_color = "r"
 
-            current_vertex = self.get_vertex(queue.pop())
+            current_vertex = self.get_vertex(queue.popleft())
 
             # loop over adjcent vertexes
             for _, vertex in enumerate(current_vertex.get_neighbors()):
@@ -283,7 +283,7 @@ class Graph:
         visited.add(start_id)
 
         while queue:
-            v = self.get_vertex(queue.pop())
+            v = self.get_vertex(queue.popleft())
 
             # add adj verticies
             for _, vertex in enumerate(v.get_neighbors()):
@@ -313,3 +313,31 @@ class Graph:
                 cc.append(self.get_connected(vertex.get_id(), visited.add))
 
         return cc
+
+
+    def find_path_dfs_iter(self, start_id, target_id):
+        """
+        Use DFS with a stack to find a path from start_id to target_id.
+        """
+
+        visited = set()
+        stack = deque()
+        stack.append(start_id)
+        visited.add(start_id)
+
+        path = list()
+
+        while stack:
+            v = self.get_vertex(stack.pop())
+            path.append(v.get_id())
+
+            if v.get_id() == target_id:
+                return path
+
+            for _, vertex in enumerate(v.get_neighbors()):
+                # add vertex to stack
+                if vertex.get_id() not in visited:
+                    stack.append(vertex.get_id())
+                    visited.add(vertex.get_id())
+
+        return list()
