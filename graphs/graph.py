@@ -280,22 +280,22 @@ class Graph:
         # build queue add first item
         queue = deque()
         queue.append(start_id)
-        visited.add(vertex.get_id())
+        visited.add(start_id)
 
         while queue:
             v = self.get_vertex(queue.pop())
 
             # add adj verticies
-            for _, vertex in enumerate(self.v.get_neighbors()):
+            for _, vertex in enumerate(v.get_neighbors()):
                 # add vertex to queue mark as visited and pass to visit function
                 if vertex.get_id() not in visited:
                     queue.append((vertex.get_id()))
                     visited.add(vertex.get_id())
-                    visit.add(vertex.get_id())
+                    visit(vertex.get_id())
 
         return list(visited)
 
-    def get_connected_components(self):
+    def find_connected_components(self):
         """
         Return a list of all connected components, with each connected component
         represented as a list of vertex ids.
@@ -310,6 +310,6 @@ class Graph:
             # vertex has not been visited perform bfs
             if vertex.get_id() not in visited:
                 visited.add(vertex.get_id())
-                cc.append(self.get_connected(vertex.get_id(), visited.append))
+                cc.append(self.get_connected(vertex.get_id(), visited.add))
 
         return cc
