@@ -314,7 +314,6 @@ class Graph:
 
         return cc
 
-
     def find_path_dfs_iter(self, start_id, target_id):
         """
         Use DFS with a stack to find a path from start_id to target_id.
@@ -341,3 +340,22 @@ class Graph:
                     visited.add(vertex.get_id())
 
         return list()
+
+    def dfs(start_vertex, visited):
+        print(f'Visiting vertex {start_vertex.get_id()}')
+
+        # recurse for each vertex in neighbors
+        for vertex in start_vertex.get_neighbors():
+            if vertex.get_id() not in visited:
+                visited.add(vertex.get_id())
+                dfs(vertex, visited)
+        return
+
+    def dfs_recursive(self, start_id):
+        """Visit each vertex, starting with start_id, in DFS order."""
+
+        visited = set()  # set of vertices we've visited so far
+        visited.add(start_id)
+
+        start_vertex = self.get_vertex(start_id)
+        dfs(start_vertex, visited)

@@ -6,10 +6,10 @@ Follow the instructions [here](https://make-school-courses.github.io/CS-2.2-Grap
 
 ### HW1
 1. How is Breadth-first Search different in graphs than in trees?
- - Trees have no cycles meaning theres no need to have keep track of nodes that we've already seen as the structure assures no cycles.
+    - Trees have no cycles meaning theres no need to have keep track of nodes that we've already seen as the structure assures no cycles.
 
 2. What is one application of Breadth-first Search (besides social networks)? Describe how BFS is used for that application. If you need some ideas, check out [this article](https://www.geeksforgeeks.org/applications-of-breadth-first-traversal/?ref=rp).
- - BFS can be used to find the shortest path to a point given multiple points. The structure of an algorithm allows it to go down and evaluate multiple paths meaning that you can keep track of distance between two target points.
+    - BFS can be used to find the shortest path to a point given multiple points. The structure of an algorithm allows it to go down and evaluate multiple paths meaning that you can keep track of distance between two target points.
 
 ### HW2
 1. Compare and contrast Breadth-first Search and Depth-first Search by providing one similarity and one difference.
