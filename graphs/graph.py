@@ -344,23 +344,31 @@ class Graph:
     def dfs(self, start_vertex, path):
         print(f'Visiting vertex {start_vertex.get_id()}')
 
+        path.add(start_vertex.get_id())
+        print(f'Current path: {path}')
         for index, vertex in enumerate(start_vertex.get_neighbors()):
+            print(f'-------')
             # vertex in path - found cycle
+            print(f'V-{vertex.get_id()}')
+
+            # base case, cycle is found
             if vertex.get_id() in path:
+                print('here!')
                 return True
             # vertex not in path - call dfs
             else:
                 # add id to path
                 path.add(vertex.get_id())
-                # recurse deeper
-                self.dfs(vertex, path)
-
+                
+                # recurse deeper, make sure a true result returns properly
+                if self.dfs(vertex, path):
+                    return True
                 # remove from path once dfs call finishes
                 path.remove(vertex.get_id())
 
-            print(f'Current path: {path}')
-
+            # print(f'Current path: {path}')
         return False
+
 
     def dfs_recursive(self, start_id):
         """Visit each vertex, starting with start_id, in DFS order."""
@@ -385,6 +393,5 @@ class Graph:
         path = set()
 
         start_vertex = self.get_vertices()[0]
-        path.add(start_vertex.get_id())
 
         return self.dfs(start_vertex, path)
