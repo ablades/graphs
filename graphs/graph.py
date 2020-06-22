@@ -341,15 +341,26 @@ class Graph:
 
         return list()
 
-    def dfs(start_vertex, visited):
+    def dfs(self, start_vertex, path):
         print(f'Visiting vertex {start_vertex.get_id()}')
 
-        # recurse for each vertex in neighbors
-        for vertex in start_vertex.get_neighbors():
-            if vertex.get_id() not in visited:
-                visited.add(vertex.get_id())
-                dfs(vertex, visited)
-        return
+        for index, vertex in enumerate(start_vertex.get_neighbors()):
+            # vertex in path - found cycle
+            if vertex.get_id() in path:
+                return True
+            # vertex not in path - call dfs
+            else:
+                # add id to path
+                path.add(vertex.get_id())
+                # recurse deeper
+                self.dfs(vertex, path)
+
+                # remove from path once dfs call finishes
+                path.remove(vertex.get_id())
+
+            print(f'Current path: {path}')
+
+        return False
 
     def dfs_recursive(self, start_id):
         """Visit each vertex, starting with start_id, in DFS order."""
@@ -358,4 +369,22 @@ class Graph:
         visited.add(start_id)
 
         start_vertex = self.get_vertex(start_id)
-        dfs(start_vertex, visited)
+        self.dfs(start_vertex, visited)
+
+    def contains_cycle(self):
+        """
+        Make sure your method still works on graphs containing multiple connected components! 
+        You can do this by iterating over all the vertices in the graph, and executing a DFS traversal 
+        starting from each unvisited vertex.
+
+        HINT: As you perform a DFS traversal, keep a current_path set containing all of 
+        the vertices in the current DFS path. If in the traversal you encounter a neighbor 
+        that is already in the current_path, you have found a cycle and can return True. 
+        Make sure to remove vertices from the current_path when going back up the traversal tree.
+        """
+        path = set()
+
+        start_vertex = self.get_vertices()[0]
+        path.add(start_vertex.get_id())
+
+        return self.dfs(start_vertex, path)
