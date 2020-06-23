@@ -22,3 +22,4 @@ Follow the instructions [here](https://make-school-courses.github.io/CS-2.2-Grap
     and we also have A->C. If during the traversal dfs goes down the path with B it will not return the shortest path.
 
 3. Explain why we cannot perform a topological sort on a graph containing a cycle.
+    - Cycles ruin the linear sort property as there is now no one path. The cycle creates an infeasible structure.
