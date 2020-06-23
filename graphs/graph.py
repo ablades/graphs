@@ -341,34 +341,26 @@ class Graph:
 
         return list()
 
-    def dfs(self, start_vertex, path):
-        print(f'Visiting vertex {start_vertex.get_id()}')
+    def contains_dfs(self, start_vertex, path):
 
+        # add current vertex to path
         path.add(start_vertex.get_id())
-        print(f'Current path: {path}')
-        for index, vertex in enumerate(start_vertex.get_neighbors()):
-            print(f'-------')
-            # vertex in path - found cycle
-            print(f'V-{vertex.get_id()}')
 
+        for index, vertex in enumerate(start_vertex.get_neighbors()):
             # base case, cycle is found
             if vertex.get_id() in path:
-                print('here!')
                 return True
             # vertex not in path - call dfs
             else:
                 # add id to path
                 path.add(vertex.get_id())
-                
                 # recurse deeper, make sure a true result returns properly
-                if self.dfs(vertex, path):
-                    return True
+                return self.contains_dfs(vertex, path)
                 # remove from path once dfs call finishes
                 path.remove(vertex.get_id())
 
             # print(f'Current path: {path}')
         return False
-
 
     def dfs_recursive(self, start_id):
         """Visit each vertex, starting with start_id, in DFS order."""
@@ -377,21 +369,40 @@ class Graph:
         visited.add(start_id)
 
         start_vertex = self.get_vertex(start_id)
-        self.dfs(start_vertex, visited)
+        self.contains_dfs(start_vertex, visited)
 
     def contains_cycle(self):
         """
-        Make sure your method still works on graphs containing multiple connected components! 
-        You can do this by iterating over all the vertices in the graph, and executing a DFS traversal 
-        starting from each unvisited vertex.
-
-        HINT: As you perform a DFS traversal, keep a current_path set containing all of 
-        the vertices in the current DFS path. If in the traversal you encounter a neighbor 
-        that is already in the current_path, you have found a cycle and can return True. 
-        Make sure to remove vertices from the current_path when going back up the traversal tree.
+        Check if a graph contains a cycle
         """
         path = set()
 
         start_vertex = self.get_vertices()[0]
 
-        return self.dfs(start_vertex, path)
+        return self.contains_dfs(start_vertex, path)
+
+    def topo_dfs(self, start_vertex, visited):
+        visited.add(start_vertex.get_id())
+        for _, vertex in enumerate(start_vertex.get_neighbors()):
+            if vertex.get_id() not in visited:
+                self.topo_dfs(vertex, visited)
+
+    def topological_sort(self):
+        """
+        Return a valid ordering of vertices in a directed acyclic graph.
+        If the graph contains a cycle, throw a ValueError.
+        """
+
+        if self.contains_cycle():
+            raise ValueError(self)
+        visited = set()
+        stack = deque()
+        for _, vertex in enumerate(self.get_vertices()):
+            self.topo_dfs(vertex, visited)
+
+            stack.append(vertex.get_id())
+
+        # extra cheese :))))
+        item = stack.pop()
+        stack.appendleft(item)
+        return list(stack)
