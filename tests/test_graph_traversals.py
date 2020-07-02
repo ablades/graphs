@@ -1,10 +1,4 @@
-<<<<<<< HEAD
 import unittest
-=======
-
-import unittest
-from gradescope_utils.autograder_utils.decorators import weight, visibility
->>>>>>> 28b0c0fb235f7f0787ebe54d3b1cc50a8577598d
 from graphs.graph import Graph
 
 
@@ -15,20 +9,11 @@ class TestBipartite(unittest.TestCase):
         graph.add_vertex('A')
         graph.add_vertex('B')
         graph.add_vertex('C')
-<<<<<<< HEAD
         graph.add_edge('A', 'B')
         graph.add_edge('A', 'C')
         graph.add_edge('B', 'C')
 
         self.assertFalse(graph.is_bipartite())
-=======
-        graph.add_edge('A','B')
-        graph.add_edge('A','C')
-        graph.add_edge('B','C')
-
-        self.assertFalse(graph.is_bipartite())
-        
->>>>>>> 28b0c0fb235f7f0787ebe54d3b1cc50a8577598d
 
     def test_is_bipartite_cycle(self):
         """Test that a cycle on 4 vertices is bipartite."""
@@ -37,22 +22,12 @@ class TestBipartite(unittest.TestCase):
         graph.add_vertex('B')
         graph.add_vertex('C')
         graph.add_vertex('D')
-<<<<<<< HEAD
         graph.add_edge('A', 'B')
         graph.add_edge('B', 'C')
         graph.add_edge('C', 'D')
         graph.add_edge('A', 'D')
 
         self.assertTrue(graph.is_bipartite())
-=======
-        graph.add_edge('A','B')
-        graph.add_edge('B','C')
-        graph.add_edge('C','D')
-        graph.add_edge('A','D')
-
-        self.assertTrue(graph.is_bipartite())
-        
->>>>>>> 28b0c0fb235f7f0787ebe54d3b1cc50a8577598d
 
     def test_is_bipartite_tree(self):
         """Test that a tree on 4 vertices is bipartite."""
@@ -61,15 +36,9 @@ class TestBipartite(unittest.TestCase):
         vertex_b = graph.add_vertex('B')
         vertex_c = graph.add_vertex('C')
         vertex_d = graph.add_vertex('D')
-<<<<<<< HEAD
         graph.add_edge('A', 'B')
         graph.add_edge('A', 'C')
         graph.add_edge('A', 'D')
-=======
-        graph.add_edge('A','B')
-        graph.add_edge('A','C')
-        graph.add_edge('A','D')
->>>>>>> 28b0c0fb235f7f0787ebe54d3b1cc50a8577598d
 
         self.assertTrue(graph.is_bipartite())
 
@@ -84,15 +53,9 @@ class TestConnectedComponents(unittest.TestCase):
         vertex_d = graph.add_vertex('D')
         vertex_d = graph.add_vertex('E')
         vertex_d = graph.add_vertex('F')
-<<<<<<< HEAD
         graph.add_edge('A', 'B')
         graph.add_edge('A', 'C')
         graph.add_edge('B', 'C')
-=======
-        graph.add_edge('A','B')
-        graph.add_edge('A','C')
-        graph.add_edge('B','C')
->>>>>>> 28b0c0fb235f7f0787ebe54d3b1cc50a8577598d
         graph.add_edge('D', 'E')
 
         expected_components = [

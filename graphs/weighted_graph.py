@@ -10,7 +10,7 @@ class WeightedVertex(Vertex):
         vertex_id (string): A unique identifier to identify this vertex.
         """
         self.__id = vertex_id
-        self.__neighbors_dict = {} # id -> (obj, weight)
+        self.__neighbors_dict = {}  # id -> (obj, weight)
 
     def add_neighbor(self, vertex_obj, weight):
         """
@@ -20,7 +20,7 @@ class WeightedVertex(Vertex):
         vertex_obj (Vertex): An instance of Vertex to be stored as a neighbor.
         weight (int): The edge weight from self -> neighbor.
         """
-        self.__neighbors_dict[vertex_obj._id] = (vertex_obj, weight)
+        self.__neighbors_dict[vertex_obj.__id] = (vertex_obj, weight)
 
     def get_neighbors(self):
         """Return the neighbors of this vertex as a list of neighbor ids."""
@@ -49,7 +49,7 @@ class WeightedGraph(Graph):
         Parameters:
         is_directed (boolean): Whether the graph is directed (edges go in only one direction).
         """
-        self.vertex_dict = {} # id -> object
+        self.vertex_dict = {}  # id -> object
         self.__is_directed = is_directed
 
     def add_vertex(self, vertex_id):
@@ -62,7 +62,7 @@ class WeightedGraph(Graph):
         Vertex: The new vertex object.
         """
         if vertex_id in self.vertex_dict.keys():
-            return False # it's already there
+            return False  # it's already there
         vertex_obj = WeightedVertex(vertex_id)
         self.vertex_dict[vertex_id] = vertex_obj
         return True
@@ -73,7 +73,7 @@ class WeightedGraph(Graph):
             return None
         vertex_obj = self.vertex_dict[vertex_id]
         return vertex_obj
-    
+
     def add_edge(self, vertex_id1, vertex_id2, weight):
         """
         Add an edge from vertex with id `vertex_id1` to vertex with id `vertex_id2`.
@@ -89,7 +89,7 @@ class WeightedGraph(Graph):
         vertex_obj1 = self.get_vertex(vertex_id1)
         vertex_obj2 = self.get_vertex(vertex_id2)
         vertex_obj1.add_neighbor(vertex_obj2, weight)
-        if not self.is_directed:
+        if not self.__is_directed:
             vertex_obj2.add_neighbor(vertex_obj1, weight)
 
     def get_vertices(self):
@@ -106,7 +106,6 @@ class WeightedGraph(Graph):
         vertex1_root = self.find(parent_map, vertex_id1)
         vertex2_root = self.find(parent_map, vertex_id2)
         parent_map[vertex1_root] = vertex2_root
-
 
     def find(self, parent_map, vertex_id):
         """Get the root (or, group label) for vertex_id."""
@@ -171,7 +170,6 @@ class WeightedGraph(Graph):
         #    vertex's distance, if it is lower than previous.
 
         # TODO: Return None if target vertex not found.
-
 
     def floyd_warshall(self):
         """
