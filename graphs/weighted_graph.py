@@ -67,7 +67,7 @@ class WeightedGraph(Graph):
         Vertex: The new vertex object.
         """
         if vertex_id in self.__vertex_dict.keys():
-            return False # it's already there
+            return False  # it's already there
         vertex_obj = WeightedVertex(vertex_id)
         self.__vertex_dict[vertex_id] = vertex_obj
         return True
@@ -126,36 +126,32 @@ class WeightedGraph(Graph):
         Use Kruskal's Algorithm to return a list of edges, as tuples of 
         (start_id, dest_id, weight) in the graph's minimum spanning tree.
         """
-        # Create a list of all edges in the graph, sort them by weight
-        # from smallest to largest
-        edges = []
-        for vertex in self.get_vertices():
-            # print(vertex.get_neighbors_with_weights())
-            for neighbor, weight in vertex.get_neighbors_with_weights():
+        #
+        edges = list()
+
+        # Create and sort edges
+        for _, vertex in enumerate(self.get_vertices()):
+            for _, (neighbor, weight) in enumerate(vertex.get_neighbors_with_weights()):
                 edges.append((vertex.get_id(), neighbor.get_id(), weight))
-        edges = sorted(edges, key=lambda x: x[2]) 
-        # Create a dictionary `parent_map` to map vertex -> its "parent".
-        # Initialize it so that each vertex is its own parent.
-        parent_map = {x[0]:x[0] for x in edges}
 
-        # Create an empty list to hold the solution (i.e. all edges in the final spanning tree)
-        spanning_tree = []
+        edges = sorted(edges, key=lambda x: x[2])
 
-        # While the spanning tree holds < V-1 edges,
+        parent_map = dict()
+        for _, vertex in enumerate(edges):
+            parent_map[vertex[0]] = vertex[0]
+
+        # Solution tree
+        spanning_tree = list()
+
         while len(spanning_tree) <= len(edges) - 1:
-            # get the smallest edge.
-            current = edges.pop(0)
-            (vertex1, vertex2, weight) = current
-            # If the two vertices connected by the edge are in different sets
-            # (i.e. calling `find()` gets two different roots), then it will not create a cycle, 
+            # Process an edge
+            edge = edges.pop(0)
+            vertex1, vertex2, weight = edge
+            # Determine if vertexes should be joined
             if self.find(parent_map, vertex1) != self.find(parent_map, vertex2):
-                # add it to the solution set and call `union()` on the two vertices.
-                spanning_tree.append(current)
+                spanning_tree.append(edge)
                 self.union(parent_map, vertex1, vertex2)
-            else:
-                continue
 
-        # Return the solution list.
         return spanning_tree
 
     def minimum_spanning_tree_prim(self):
@@ -164,7 +160,27 @@ class WeightedGraph(Graph):
         graph's spanning tree.
         Assume that the graph is connected.
         """
-        pass
+        total_weight = 0
+        vertex_weights = dict()
+        # Add all verticies
+        for _, vertex in enumerate(self.get_vertices()):
+            vertex_weights[vertex] = float('inf')
+
+        vertex_weights[self.get_vertices()[0]] = 0
+
+        while vertex_weights:
+            # Find min, increment weight
+            min_vertex = min(vertex_weights.items(), key=lambda v: v[1])
+            vertex = min_vertex[0]
+            vertex_weights.pop(vertex, None)
+            total_weight += min_vertex[1]
+
+            for _, (neighbor, weight) in enumerate(vertex.get_neighbors_with_weights()):
+                # Assign weight
+                if neighbor in vertex_weights and weight < vertex_weights[neighbor]:
+                    vertex_weights[neighbor] = weight
+
+        return total_weight
 
     def find_shortest_path(self, start_id, target_id):
         """
@@ -202,4 +218,25 @@ class WeightedGraph(Graph):
         Return the All-Pairs-Shortest-Paths dictionary, containing the shortest
         paths from each vertex to each other vertex.
         """
-        pass
+        # create a top-level dictionary to hold each vertex & map it to another
+        # dictionary
+        dist = dict()
+        all_vertex_ids = self.__vertex_dict.keys()
+        # set default values - either 0 (for v -> v) or infinity
+        for vertex1 in all_vertex_ids:
+            dist[vertex1] = dict()
+            for vertex2 in all_vertex_ids:
+                dist[vertex1][vertex2] = float('inf')
+            dist[vertex1][vertex1] = 0
+        # add all edge weights to the dictionary
+        all_vertex_objs = self.get_vertices()
+        for vertex in all_vertex_objs:
+            neighbors_with_weights = vertex.get_neighbors_with_weights()
+            for neighbor, weight in neighbors_with_weights:
+                dist[vertex.get_id()][neighbor.get_id()] = weight
+        # execute the algorithm - "relax" the distances using an intermediate vertex
+        for k in all_vertex_ids:
+            for i in all_vertex_ids:
+                for j in all_vertex_ids:
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+        return dist
