@@ -9,26 +9,25 @@ class Vertex(object):
     def __init__(self, vertex_id):
         """
         Initialize a vertex and its neighbors dictionary.
-
         Parameters:
         vertex_id (string): A unique identifier to identify this vertex.
         """
         self.__id = vertex_id
-        self.__neighbors_dict = {}  # id -> object
+        self.__neighbors_dict = {} # id -> object
 
     def add_neighbor(self, vertex_obj):
         """
         Add a neighbor by storing it in the neighbors dictionary.
-
         Parameters:
         vertex_obj (Vertex): An instance of Vertex to be stored as a neighbor.
         """
-        self.__neighbors_dict[vertex_obj.get_id()] = vertex_obj
+
+        self.__neighbors_dict[vertex_obj.__id] = vertex_obj
 
     def __str__(self):
         """Output the list of neighbors of this vertex."""
-        neighbor_ids = list(self.neighbors_dict.keys())
-        return f'{self.id} adjacent to {neighbor_ids}'
+        neighbor_ids = list(self.__neighbors_dict.keys())
+        return f'{self.__id} adjacent to {neighbor_ids}'
 
     def __repr__(self):
         """Output the list of neighbors of this vertex."""
@@ -36,11 +35,11 @@ class Vertex(object):
 
     def get_neighbors(self):
         """Return the neighbors of this vertex."""
-        return list(self.neighbors_dict.values())
+        return list(self.__neighbors_dict.values())
 
     def get_id(self):
         """Return the id of this vertex."""
-        return self.id
+        return self.__id
 
 
 class Graph:
